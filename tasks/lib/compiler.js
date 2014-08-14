@@ -144,12 +144,12 @@ module.exports = function (grunt)
                 }
                 else
                 {
-                    folder_apps = path.join('/Applications', '/Adobe');
+                    folder_apps = '/Applications';
 
                     if (launch_config.family === 'CC')
-                        folder_servicemgr = path.join(process.env['APPDATA'], '/Library/Application Support/Adobe/CEPServiceManager4/extensions');
+                        folder_servicemgr = path.join(process.env['HOME'], '/Library/Application Support/Adobe/CEPServiceManager4/extensions');
                     else
-                        folder_servicemgr = path.join(process.env['APPDATA'], '/Library/Application Support/Adobe/CEP/extensions');
+                        folder_servicemgr = path.join(process.env['HOME'], '/Library/Application Support/Adobe/CEP/extensions');
                 }
 
                 // Extension install path
