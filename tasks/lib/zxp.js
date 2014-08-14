@@ -36,7 +36,7 @@ module.exports = function (grunt)
         }
         else
         {
-            exec_name = 'ccextensionsmac.dmg';
+            exec_name = 'ZXPSignCmd';
         }
 
         return path.resolve(__dirname, '../../bin/' + exec_name);
