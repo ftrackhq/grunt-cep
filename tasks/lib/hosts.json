@@ -33,7 +33,8 @@
             "x64": true
         },
         "premiere": {
-            "name": "Premiere",
+            "familyname": "Premiere",
+            "name": "Premiere Pro",
             "ids": [ "PPRO" ],
             "version": { "min": "8.0", "max": "8.9" },
             "bin": { "win": "Adobe Premiere Pro.exe", "mac": "Adobe Premiere Pro CC 2014.app" },
