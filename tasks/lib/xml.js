@@ -154,7 +154,11 @@ module.exports = function (grunt)
         // Create <product> list
         for (var product in product_versions)
         {
-            data.products.push('<product familyname="' + cep.hosts.getProduct(product).familyname + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
+            if (cep.hosts.getProduct(product).productName) {
+                data.products.push('<product name="' + cep.hosts.getProduct(product).productName + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
+            } else {
+                data.products.push('<product familyname="' + cep.hosts.getProduct(product).familyname + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
+            }
         }
 
         // Fill in .mxi template
