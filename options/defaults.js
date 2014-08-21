@@ -177,6 +177,11 @@ module.exports =
         // extensions, this will be used for the first one, with
         // other extensions using incremental ports (i.e. 8089, 8090, etc.)
         host_port: 8088,
+
+        kill: true,
+        setDebugMode: true,
+        install: true,
+        launch: true
     },
 
 

@@ -113,8 +113,7 @@ module.exports = function (grunt)
     /**
      * Launches debug with specified settings.
      */
-    var launch = function (callback, build, host)
-    {
+    var launch = function (callback, build, host, options) {
         var tasks = [],
             launch_config = {
                 product: build.launch.product,
@@ -183,8 +182,11 @@ module.exports = function (grunt)
                 }
 
                 callback();
-            },
+            }
+        );
 
+        if (options.kill) {
+            tasks.push(
             /**
              * Kill the specified host application process if it is running.
              */
@@ -218,8 +220,12 @@ module.exports = function (grunt)
                 });
                 spawned.stdout.on('data', function (data) { grunt.verbose.writeln(data); });
                 spawned.stderr.on('data', function (data) { grunt.verbose.writeln(data); });
-            },
+            }
+            );
+        }
 
+        if (options.setDebugMode) {
+            tasks.push(
             /**
              * Set "PlayerDebugMode" flag in plist file or Windows registry.
              */
@@ -276,8 +282,12 @@ module.exports = function (grunt)
                 });
                 spawned.stdout.on('data', function (data) { grunt.verbose.writeln(data); });
                 spawned.stderr.on('data', function (data) { grunt.verbose.writeln(data); });
-            },
+            }
+            );
+        }
 
+        if (options.install) {
+            tasks.push(
             /**
              * Install extension by copying files to the 'extensions' folder.
              */
@@ -301,8 +311,11 @@ module.exports = function (grunt)
 
                 grunt.verbose.or.ok();
                 callback();
-            },
-
+            }
+            );
+        }
+        if (options.launch) {
+            tasks.push(
             /**
              * Launch the specified host application.
              */
@@ -335,8 +348,8 @@ module.exports = function (grunt)
                     // For now we just do not pass error to the callback to prevent the task from failing
                     callback(/*error, result*/);
                 });
-            }
-        );
+            });
+        }
 
         // Run child tasks
         async.series(tasks, function (err, result) { callback(err, result); });

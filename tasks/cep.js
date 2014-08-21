@@ -195,8 +195,9 @@ module.exports = function (grunt)
                  */
                 function (callback)
                 {
-                    if (options.profile === 'launch')
-                        compiler.launch(callback, build, host);
+                    if (options.profile === 'launch') {
+                        compiler.launch(callback, build, host, options.launch);
+                    }
                 }
             );
         }
