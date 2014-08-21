@@ -58,11 +58,26 @@ module.exports = function (grunt)
             {
                 // Copy all the content of the source folder over to the output folder
                 var message = 'Copying ' + build.source.cyan + ' folder...';
-                grunt.verbose.writeln(message).or.write(message);
+                grunt.verbose.writeln().writeln(message);
 
                 cep.utils.copy({ cwd: build.source }, build.staging + '/', '**/*.*');
                 grunt.verbose.or.ok();
                 callback();
+
+                // Copy all the content of the dependencies folder over to the output folder
+                if (build.dependencies && build.dependencies.length) {
+                    message = 'Copying dependencies...';
+                    grunt.verbose.writeln().writeln(message);
+
+                    _.forEach(build.dependencies, function (dependency) {
+                        message = 'Copying ' + dependency.cyan + '...';
+                        grunt.verbose.writeln().writeln(message);
+                        var dest = build.staging + '/' + dependency;
+                        grunt.file.mkdir(dest);
+                        cep.utils.copy({ cwd: dependency }, dest, '**/*.*');
+
+                    });
+                }
             },
 
             /**
