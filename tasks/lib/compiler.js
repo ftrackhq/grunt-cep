@@ -62,7 +62,6 @@ module.exports = function (grunt)
 
                 cep.utils.copy({ cwd: build.source }, build.staging + '/', '**/*.*');
                 grunt.verbose.or.ok();
-                callback();
 
                 // Copy all the content of the dependencies folder over to the output folder
                 if (build.dependencies && build.dependencies.length) {
@@ -78,6 +77,7 @@ module.exports = function (grunt)
 
                     });
                 }
+                callback();
             },
 
             /**
