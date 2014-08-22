@@ -137,7 +137,7 @@ module.exports = function (grunt)
             },
             exec = require('child_process').exec;
 
-        grunt.log.writeln().writeln('Launching application...'.bold);
+        grunt.log.writeln().writeln('Installing extension...'.bold);
 
         tasks.push(
             /**
