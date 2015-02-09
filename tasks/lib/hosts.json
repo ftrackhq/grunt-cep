@@ -41,6 +41,14 @@
             "bin": { "win": "Adobe Premiere Pro.exe", "mac": "Adobe Premiere Pro CC 2014.app" },
             "x64": true
         },
+        "after_effects": {
+            "familyname": "After Effects",
+            "name": "After Effects",
+            "ids": [ "AEFT" ],
+            "version": { "min": "13.0", "max": "13.9" },
+            "bin": { "win": "Support Files\\AfterFX.exe", "mac": "Adobe After Effects CC 2014.app" },
+            "x64": true
+        },
         "prelude": {
             "familyname": "Prelude",
             "name": "Prelude",
@@ -89,6 +97,14 @@
             "ids": [ "PPRO" ],
             "version": { "min": "7.0", "max": "7.9" },
             "bin": { "win": "Premiere.exe", "mac": "Adobe Premiere CC.app" },
+            "x64": true
+        },
+        "after_effects": {
+            "familyname": "After Effects",
+            "name": "After Effects",
+            "ids": [ "AEFT" ],
+            "version": { "min": "12.0", "max": "12.9" },
+            "bin": { "win": "Support Files\\AfterFX.exe", "mac": "Adobe After Effects CC 2014.app" },
             "x64": true
         },
         "prelude": {
