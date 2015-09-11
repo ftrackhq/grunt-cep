@@ -1,5 +1,5 @@
-﻿/**
- * Copyright 2014 Francesco Camarlinghi
+/**
+ * Copyright 2014-2015 Francesco Camarlinghi
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,14 +38,20 @@ module.exports = function (grunt)
             {
                 // Validate input/output files
                 if (typeof build.staging !== 'string' || !build.staging.length)
+                {
                     grunt.fatal('Invalid "staging" folder: ' + String(build.staging).cyan + '.');
+                }
 
                 if (typeof build.source !== 'string' || !build.source.length)
+                {
                     grunt.fatal('Invalid "source" folder: ' + String(build.source).cyan + '.');
+                }
 
                 // Clean current output folder
                 if (grunt.file.exists(build.staging) && grunt.file.isDir(build.staging))
+                {
                     grunt.file.delete(build.staging, { force: true });
+                }
 
                 grunt.file.mkdir(build.staging);
                 callback();
@@ -58,7 +64,7 @@ module.exports = function (grunt)
             {
                 // Copy all the content of the source folder over to the output folder
                 var message = 'Copying ' + build.source.cyan + ' folder...';
-                grunt.verbose.writeln().writeln(message);
+                grunt.verbose.writeln(message).or.write(message);
 
                 cep.utils.copy({ cwd: build.source }, build.staging + '/', '**/*.*');
                 grunt.verbose.or.ok();
@@ -137,7 +143,7 @@ module.exports = function (grunt)
             },
             exec = require('child_process').exec;
 
-        grunt.log.writeln().writeln('Installing extension...'.bold);
+        grunt.log.writeln().writeln('Launching application...'.bold);
 
         tasks.push(
             /**
@@ -149,21 +155,42 @@ module.exports = function (grunt)
 
                 if (global.IS_WINDOWS)
                 {
-                    folder_apps = path.join(process.env["PROGRAMFILES"], '/Adobe');
+                    folder_apps = path.join(process.env['PROGRAMFILES'], '/Adobe');
 
                     if (launch_config.family === 'CC')
+                    {
                         folder_servicemgr = path.join(process.env['APPDATA'], '/Adobe/CEPServiceManager4/extensions');
+                    }
                     else
+                    {
                         folder_servicemgr = path.join(process.env['APPDATA'], '/Adobe/CEP/extensions');
+                    }
                 }
                 else
                 {
                     folder_apps = '/Applications';
 
                     if (launch_config.family === 'CC')
+                    {
                         folder_servicemgr = path.join(process.env['HOME'], '/Library/Application Support/Adobe/CEPServiceManager4/extensions');
+                    }
                     else
+                    {
                         folder_servicemgr = path.join(process.env['HOME'], '/Library/Application Support/Adobe/CEP/extensions');
+                    }
+
+                    // Fallback to system folder if user folder doesn't exists
+                    if (!grunt.file.exists(folder_servicemgr))
+                    {
+                        if (launch_config.family === 'CC')
+                        {
+                            folder_servicemgr = '/Library/Application Support/Adobe/CEPServiceManager4/extensions';
+                        }
+                        else
+                        {
+                            folder_servicemgr = '/Library/Application Support/Adobe/CEP/extensions';
+                        }
+                    }
                 }
 
                 // Extension install path
@@ -173,13 +200,18 @@ module.exports = function (grunt)
                 var folder_family = {
                     'CC': 'CC',
                     'CC2014': 'CC 2014',
+                    'CC2015': 'CC 2015',
                 };
 
                 var folder_name = launch_config.host.hasOwnProperty('folder') ? launch_config.host.folder : '/Adobe ' + launch_config.host.name + ' ' + folder_family[launch_config.family];
                 launch_config.app_folder = path.join(folder_apps, folder_name);
 
-                if (launch_config.family === 'CC' && launch_config.host.x64 && global.IS_X64)
+                // On Windows X64, CC apps have " (64 Bit)" added to their folder path if they are installed with 64bit support
+                // This is no longer the case starting from CC2014
+                if (global.IS_WINDOWS && global.IS_X64 && launch_config.family === 'CC' && launch_config.host.x64)
+                {
                     launch_config.app_folder += ' (64 Bit)';
+                }
 
                 if (!grunt.file.exists(launch_config.app_folder))
                 {
@@ -212,7 +244,7 @@ module.exports = function (grunt)
                 if (global.IS_WINDOWS)
                 {
                     options.cmd = 'Taskkill';
-                    options.args = ['/IM', launch_config.host.bin.win];
+                    options.args = ['/IM', path.basename(launch_config.app_bin)];
                 }
                 else
                 {
@@ -255,10 +287,13 @@ module.exports = function (grunt)
                     PLISTS = {
                         'CC': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.4.plist'),
                         'CC2014': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.5.plist'),
+                        'CC2015': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.6.plist'),
                     };
 
                     if (!PLISTS.hasOwnProperty(host_family))
+                    {
                         return;
+                    }
 
                     options = {
                         cmd: 'defaults',
@@ -270,10 +305,13 @@ module.exports = function (grunt)
                     PLISTS = {
                         'CC': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.4\\',
                         'CC2014': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.5\\',
+                        'CC2015': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.6\\',
                     };
 
                     if (!PLISTS.hasOwnProperty(host_family))
+                    {
                         return;
+                    }
 
                     options = {
                         cmd: 'reg',
@@ -281,8 +319,8 @@ module.exports = function (grunt)
                     };
                 }
 
-                grunt.verbose.writeln((options.cmd + ' ' + options.args.join(' ')).magenta)
-                .or.write('Setting OS debug mode...');
+                grunt.verbose.writeln((options.cmd + ' ' + options.args.join(' ')).magenta).or.write('Setting OS debug mode...');
+
                 var spawned = grunt.util.spawn(options, function (error, result, code)
                 {
                     if (code !== 0)
@@ -291,10 +329,29 @@ module.exports = function (grunt)
                         grunt.fatal(error);
                     }
                     else
+                    {
                         grunt.verbose.or.ok();
+                    }
 
-                    callback(error, result);
+                    // Flush preference cache to support Mac OS X 10.9 and higher
+                    if (global.IS_MAC)
+                    {
+                        var cmd = 'pkill -9 cfprefsd';
+
+                        grunt.verbose.writeln((cmd).magenta).or.write('Flushing preference cache...');
+
+                        exec(cmd, function (error, result, code)
+                        {
+                            grunt.verbose.or.ok();
+                            callback(error, result);
+                        });
+                    }
+                    else
+                    {
+                        callback(error, result);
+                    }
                 });
+
                 spawned.stdout.on('data', function (data) { grunt.verbose.writeln(data); });
                 spawned.stderr.on('data', function (data) { grunt.verbose.writeln(data); });
             }
@@ -313,7 +370,9 @@ module.exports = function (grunt)
 
                 // Clean-up install folder
                 if (grunt.file.exists(launch_config.install_path))
+                {
                     grunt.file.delete(launch_config.install_path, { force: true });
+                }
 
                 // Copy files over
                 cep.utils.copy({ 'cwd': build.staging },

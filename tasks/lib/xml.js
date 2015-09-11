@@ -1,5 +1,5 @@
 ﻿/**
- * Copyright 2014 Francesco Camarlinghi
+ * Copyright 2014-2015 Francesco Camarlinghi
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -186,7 +186,7 @@ module.exports = function (grunt)
         grunt.log.write('Generating ' + 'update.xml'.cyan + ' file...');
 
         var changes_path = path.join(options['package'].update.changelog_folder, options.bundle.version + options['package'].update.changelog_extension),
-            description = '';
+            description;
 
         if (grunt.file.exists(changes_path))
         {
@@ -200,6 +200,7 @@ module.exports = function (grunt)
         // Put templating data together
         var update_data = _.extend({}, options, {
             'download_url': options.bundle.update_url + options.bundle.name.replace(/[\s]+/g, '_').toLowerCase() + '_' + options.bundle.version + '.zxp',
+            'update_description': description,
         });
 
         // Process template and save result

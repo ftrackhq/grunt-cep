@@ -1,5 +1,5 @@
-﻿/**
- * Copyright 2014 Francesco Camarlinghi
+/**
+ * Copyright 2014-2015 Francesco Camarlinghi
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,6 +83,11 @@ module.exports =
 
         // License agreement shown when installing the extension (supports HTML markup)
         license_agreement: '',
+
+        // Additional files that will be added to the extension bundle
+        // This is passed directly to Grunt and supports Grunt's Compact and Files Array formats
+        // (see http://gruntjs.com/configuring-tasks#files for additional information)
+        files: [],
     },
 
 
@@ -154,7 +159,7 @@ module.exports =
             products: [],
 
             // Supported product families
-            families: ['CC2014', 'CC'],
+            families: [],
         },
     ],
 
