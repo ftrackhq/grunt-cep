@@ -5,7 +5,7 @@
             "name": "Photoshop",
             "ids": [ "PHXS", "PHSP" ],
             "version": { "min": "16.0", "max": "16.9" },
-            "bin": { "win": "Photoshop.exe", "mac": "Adobe Photoshop CC 2015/Adobe Photoshop CC 2015.app" },
+            "bin": { "win": "Photoshop.exe", "mac": "Adobe Photoshop CC 2015.app" },
             "x64": true
         },
         "illustrator": {
@@ -42,10 +42,11 @@
         },
         "premiere": {
             "familyname": "Premiere",
-            "name": "Premiere",
+            "name": "Premiere Pro",
+            "productName": "Premiere",
             "ids": [ "PPRO" ],
             "version": { "min": "9.0", "max": "9.9" },
-            "bin": { "win": "Adobe Premiere Pro.exe", "mac": "Adobe Premiere Pro CC 2015/Adobe Premiere Pro CC 2015.app" },
+            "bin": { "win": "Adobe Premiere Pro.exe", "mac": "Adobe Premiere Pro CC 2015.app" },
             "x64": true
         },
         "prelude": {
