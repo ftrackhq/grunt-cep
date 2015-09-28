@@ -1,7 +1,7 @@
 {
   "name": "grunt-cep",
   "description": "A Grunt plugin that helps debugging and packaging HTML5-based extensions for Adobe Creative Cloud applications.",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "homepage": "https://github.com/fcamarlinghi/grunt-cep",
   "author": {
     "name": "Francesco Camarlinghi",
@@ -22,13 +22,10 @@
     }
   ],
   "main": "Gruntfile.js",
-  "engines": {
-    "node": ">= 0.8.0"
-  },
   "dependencies": {
-    "lodash": "~2.4.1",
-    "async": "~0.2.9",
-    "node-uuid": "~1.4.1"
+    "lodash": "~3.9.3",
+    "async": "~1.2.1",
+    "node-uuid": "~1.4.3"
   },
   "peerDependencies": {
     "grunt": "~0.4.5"
