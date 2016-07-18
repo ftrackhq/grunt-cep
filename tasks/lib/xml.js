@@ -83,7 +83,8 @@ module.exports = function (grunt)
 
                 for (var j = 0; j < host.ids.length; j++)
                 {
-                    list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
+                    //list_hosts.push('<Host Name="' + host.ids[j] + '" Version="[' + range.min + ',' + range.max + ']" />');
+                    list_hosts.push('<Host Name="' + host.ids[j] + '" Version="' + range.min + '" />');
                 }
             }
         }
