@@ -201,6 +201,9 @@ module.exports = function (grunt)
                     'CC': 'CC',
                     'CC2014': 'CC 2014',
                     'CC2015': 'CC 2015',
+                    'CC2017': 'CC 2017',
+                    'CC2018': 'CC 2018',
+                    'CC2019': 'CC 2019',
                 };
 
                 var folder_name = launch_config.host.hasOwnProperty('folder') ? launch_config.host.folder : '/Adobe ' + launch_config.host.name + ' ' + folder_family[launch_config.family];
@@ -288,6 +291,9 @@ module.exports = function (grunt)
                         'CC': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.4.plist'),
                         'CC2014': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.5.plist'),
                         'CC2015': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.6.plist'),
+                        'CC2017': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.7.plist'),
+                        'CC2018': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.8.plist'),
+                        'CC2019': path.join(process.env['HOME'], '/Library/Preferences/com.adobe.CSXS.9.plist'),
                     };
 
                     if (!PLISTS.hasOwnProperty(host_family))
@@ -306,6 +312,9 @@ module.exports = function (grunt)
                         'CC': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.4\\',
                         'CC2014': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.5\\',
                         'CC2015': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.6\\',
+                        'CC2017': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.7\\',
+                        'CC2018': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.8\\',
+                        'CC2019': 'HKEY_CURRENT_USER\\Software\\Adobe\\CSXS.9\\',
                     };
 
                     if (!PLISTS.hasOwnProperty(host_family))

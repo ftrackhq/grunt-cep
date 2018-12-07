@@ -91,6 +91,8 @@ module.exports = function (grunt)
                         product = options.launch.product,
                         family = options.launch.family;
 
+                    grunt.log.write('builds', builds);
+
                     if (!_.isArray(builds) || !builds.length)
                     {
                         grunt.log.error();
@@ -128,6 +130,9 @@ module.exports = function (grunt)
                     if (!build || !product || !family)
                     {
                         grunt.log.error();
+                        grunt.log.error('build', build);
+                        grunt.log.error('product', product);
+                        grunt.log.error('family', family);
                         grunt.fatal('No matching build configuration found for given options.');
                         callback(true);
                     }

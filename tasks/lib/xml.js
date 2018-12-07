@@ -147,17 +147,24 @@ module.exports = function (grunt)
             builds[i].products.forEach(function (product)
             {
                 var version_range = get_version_range(product, builds[i].families);
-                data.files.push('<file destination="" file-type="CSXS" products="' + cep.hosts.get_cc_family_name(cep.hosts.getProduct(product).familyname) + '" maxVersion="' + version_range.max + '" minVersion="' + version_range.min + '" source="' + path.basename(builds[i].output_file) + '" />');
+                var product = cep.hosts.get_cc_family_name(cep.hosts.getProduct(product).familyname);
+                if (product !== 'AfterEffects') {
+                    data.files.push('<file destination="" file-type="CSXS" products="' + product + '" maxVersion="' + version_range.max + '" minVersion="' + version_range.min + '" source="' + path.basename(builds[i].output_file) + '" />');
+                }
             });
         }
 
         // Create <product> list
         for (var product in product_versions)
         {
-            if (cep.hosts.getProduct(product).productName) {
-                data.products.push('<product name="' + cep.hosts.getProduct(product).productName + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
+            var familyname_products = ['illustrator', 'photoshop', 'incopy', 'indesign'];
+            var name = cep.hosts.getProduct(product).familyname;
+            if (name === 'AfterEffects') {
+                // Ignore
+            } else if (familyname_products.indexOf(name.toLowerCase()) === -1) {
+                data.products.push('<product name="' + name + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
             } else {
-                data.products.push('<product familyname="' + cep.hosts.getProduct(product).familyname + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
+                data.products.push('<product familyname="' + name + '" maxversion="' + product_versions[product].max + '" primary="true" version="' + product_versions[product].min + '" />');
             }
         }
 
